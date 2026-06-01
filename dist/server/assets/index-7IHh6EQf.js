@@ -1,5 +1,5 @@
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 const profile = {
   name: "Nancy Kataria",
   role: "Software Engineer",
@@ -7,7 +7,8 @@ const profile = {
   email: "katarianancy8@gmail.com",
   tagline: "Full-stack engineer building AI-powered, human-friendly software.",
   github: "https://github.com/nancy-kataria",
-  linkedin: "https://www.linkedin.com/in/nancy-kataria8/"
+  linkedin: "https://www.linkedin.com/in/nancy-kataria8/",
+  resume: "https://drive.google.com/file/d/11MPzRBfGpUfEI8Q7g42kmKV-i25AhhQe/view?usp=sharing"
 };
 const projects = [
   {
@@ -54,16 +55,16 @@ const experience = [
 ];
 const education = [
   {
-    school: "California State University, Fullerton",
+    school: "California State University - Fullerton, United States",
     degree: "M.S. Computer Science",
-    period: "2024 — 2025",
+    period: "Jan 2024 — Jan 2026",
     detail: "GPA 3.68"
   },
   {
-    school: "Panjab University",
-    degree: "B.E. Computer Science (Hons.)",
-    period: "2019 — 2023",
-    detail: "CGPA 8.31 / 10"
+    school: "Panjab University, India",
+    degree: "B.E. Computer Science",
+    period: "Aug 2019 — May 2023",
+    detail: "CGPA 3.32"
   }
 ];
 const skills = {
@@ -304,6 +305,148 @@ Type 'help' for available commands.`;
     }
   );
 }
+const ICON_SLUGS = {
+  Python: "python",
+  JavaScript: "javascript",
+  TypeScript: "typescript",
+  SQL: null,
+  HTML: "html5",
+  CSS: null,
+  React: "react",
+  "Next.js": "nextdotjs",
+  "Node.js": "nodedotjs",
+  "Express.js": "express",
+  Deno: "deno",
+  Langchain: "langchain",
+  Pinecone: null,
+  PyTorch: "pytorch",
+  Pandas: "pandas",
+  NumPy: "numpy",
+  "Scikit-learn": "scikitlearn",
+  Prolog: null,
+  MongoDB: "mongodb",
+  MySQL: "mysql",
+  Supabase: "supabase",
+  Prisma: "prisma",
+  Git: "git",
+  GitHub: "github",
+  Postman: "postman",
+  Zod: "zod"
+};
+function SkillsBubbles() {
+  const containerRef = useRef(null);
+  const bubblesRef = useRef([]);
+  const nodesRef = useRef([]);
+  const [, force] = useState(0);
+  const allSkills = useMemo(() => {
+    const list = [];
+    Object.values(skills).flat().forEach((s) => {
+      list.push({ name: s, slug: ICON_SLUGS[s] ?? null });
+    });
+    return list;
+  }, []);
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const init = () => {
+      const W = el.clientWidth;
+      const H = el.clientHeight;
+      bubblesRef.current = allSkills.map((s) => {
+        const hasLogo = !!s.slug;
+        const size = hasLogo ? 58 + Math.random() * 18 : 70 + s.name.length * 4;
+        return {
+          name: s.name,
+          slug: s.slug,
+          size,
+          x: Math.random() * Math.max(1, W - size),
+          y: Math.random() * Math.max(1, H - size),
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5
+        };
+      });
+      force((n) => n + 1);
+    };
+    init();
+    let raf = 0;
+    const tick = () => {
+      const W = el.clientWidth;
+      const H = el.clientHeight;
+      const bs = bubblesRef.current;
+      for (let i = 0; i < bs.length; i++) {
+        const b = bs[i];
+        b.x += b.vx;
+        b.y += b.vy;
+        if (b.x <= 0) {
+          b.x = 0;
+          b.vx = Math.abs(b.vx);
+        }
+        if (b.y <= 0) {
+          b.y = 0;
+          b.vy = Math.abs(b.vy);
+        }
+        if (b.x + b.size >= W) {
+          b.x = W - b.size;
+          b.vx = -Math.abs(b.vx);
+        }
+        if (b.y + b.size >= H) {
+          b.y = H - b.size;
+          b.vy = -Math.abs(b.vy);
+        }
+        const node = nodesRef.current[i];
+        if (node) {
+          node.style.transform = `translate3d(${b.x}px, ${b.y}px, 0)`;
+        }
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    const onResize = () => init();
+    window.addEventListener("resize", onResize);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+    };
+  }, [allSkills]);
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      ref: containerRef,
+      className: "relative w-full overflow-hidden rounded-2xl border border-border bg-secondary/40",
+      style: { height: "min(70vh, 560px)" },
+      "aria-label": "Floating skills",
+      children: bubblesRef.current.map((b, i) => {
+        const hasLogo = !!b.slug;
+        return /* @__PURE__ */ jsx(
+          "div",
+          {
+            ref: (el) => {
+              nodesRef.current[i] = el;
+            },
+            className: "absolute left-0 top-0 flex select-none items-center justify-center rounded-full border border-border bg-card shadow-sm transition-shadow hover:shadow-md",
+            style: {
+              width: b.size,
+              height: b.size,
+              transform: `translate3d(${b.x}px, ${b.y}px, 0)`,
+              willChange: "transform"
+            },
+            title: b.name,
+            children: hasLogo ? /* @__PURE__ */ jsx(
+              "img",
+              {
+                src: `https://cdn.simpleicons.org/${b.slug}`,
+                alt: b.name,
+                className: "pointer-events-none",
+                style: { width: b.size * 0.5, height: b.size * 0.5 },
+                loading: "lazy"
+              }
+            ) : /* @__PURE__ */ jsx("span", { className: "px-2 text-center font-mono-ui text-xs text-foreground", children: b.name })
+          },
+          b.name
+        );
+      })
+    }
+  );
+}
 function Index() {
   const [termOpen, setTermOpen] = useState(false);
   useEffect(() => {
@@ -324,9 +467,9 @@ function Index() {
         "nancy.dev"
       ] }),
       /* @__PURE__ */ jsxs("nav", { className: "hidden gap-7 text-sm text-muted-foreground sm:flex", children: [
-        /* @__PURE__ */ jsx("a", { href: "#work", className: "transition hover:text-foreground", children: "Work" }),
         /* @__PURE__ */ jsx("a", { href: "#experience", className: "transition hover:text-foreground", children: "Experience" }),
-        /* @__PURE__ */ jsx("a", { href: "#stack", className: "transition hover:text-foreground", children: "Stack" }),
+        /* @__PURE__ */ jsx("a", { href: "#work", className: "transition hover:text-foreground", children: "Work" }),
+        /* @__PURE__ */ jsx("a", { href: "#stack", className: "transition hover:text-foreground", children: "Skills" }),
         /* @__PURE__ */ jsx("a", { href: "#contact", className: "transition hover:text-foreground", children: "Contact" })
       ] }),
       /* @__PURE__ */ jsxs("button", { onClick: () => setTermOpen(true), className: "group inline-flex items-center gap-2 rounded-md border border-border bg-secondary px-3 py-1.5 font-mono-ui text-xs text-foreground transition hover:border-accent hover:bg-accent/10", "aria-label": "Open terminal", children: [
@@ -340,7 +483,7 @@ function Index() {
       /* @__PURE__ */ jsxs("div", { className: "relative mx-auto max-w-5xl px-6 pb-24 pt-24 sm:pt-32", children: [
         /* @__PURE__ */ jsxs("p", { className: "rise font-mono-ui text-xs uppercase tracking-[0.2em] text-muted-foreground", children: [
           /* @__PURE__ */ jsx("span", { className: "caret mr-1 inline-block h-2 w-2 rounded-full bg-accent align-middle" }),
-          "available for new-grad roles · ",
+          "actively seeking new-grad roles · ",
           profile.location
         ] }),
         /* @__PURE__ */ jsxs("h1", { className: "rise mt-6 max-w-3xl text-5xl font-medium leading-[1.05] tracking-tight sm:text-7xl", children: [
@@ -349,10 +492,7 @@ function Index() {
           /* @__PURE__ */ jsx("span", { className: "font-display italic", children: profile.name.split(" ")[0] }),
           ".",
           /* @__PURE__ */ jsx("br", {}),
-          "I build software that",
-          " ",
-          /* @__PURE__ */ jsx("span", { className: "font-display italic", children: "feels right" }),
-          "."
+          "I build software."
         ] }),
         /* @__PURE__ */ jsx("p", { className: "rise mt-7 max-w-xl text-lg text-muted-foreground", style: {
           animationDelay: "120ms"
@@ -366,40 +506,10 @@ function Index() {
           ] }),
           /* @__PURE__ */ jsx("a", { href: profile.github, target: "_blank", rel: "noreferrer", className: "rounded-full border border-border px-5 py-2.5 text-sm transition hover:border-foreground", children: "GitHub" }),
           /* @__PURE__ */ jsx("a", { href: profile.linkedin, target: "_blank", rel: "noreferrer", className: "rounded-full border border-border px-5 py-2.5 text-sm transition hover:border-foreground", children: "LinkedIn" }),
+          /* @__PURE__ */ jsx("a", { href: profile.resume, target: "_blank", rel: "noreferrer", className: "rounded-full border border-border px-5 py-2.5 text-sm transition hover:border-foreground", children: "Resume" }),
           /* @__PURE__ */ jsx("button", { onClick: () => setTermOpen(true), className: "rounded-full border border-dashed border-accent/70 px-5 py-2.5 font-mono-ui text-xs text-foreground transition hover:bg-accent/10", children: "$ open terminal" })
         ] })
       ] })
-    ] }),
-    /* @__PURE__ */ jsx("section", { id: "stack", className: "border-y border-border/60 bg-secondary/40 py-6", children: /* @__PURE__ */ jsx("div", { className: "overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "marquee-track flex w-max gap-10 whitespace-nowrap font-mono-ui text-sm text-muted-foreground", children: [...flatSkills, ...flatSkills].map((s, i) => /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-10", children: [
-      s,
-      /* @__PURE__ */ jsx("span", { className: "text-accent", children: "/" })
-    ] }, i)) }) }) }),
-    /* @__PURE__ */ jsxs("section", { id: "work", className: "mx-auto max-w-5xl px-6 py-24", children: [
-      /* @__PURE__ */ jsxs("div", { className: "mb-12 flex items-baseline justify-between", children: [
-        /* @__PURE__ */ jsxs("h2", { className: "text-3xl font-medium tracking-tight sm:text-4xl", children: [
-          "Selected ",
-          /* @__PURE__ */ jsx("span", { className: "font-display italic", children: "work" })
-        ] }),
-        /* @__PURE__ */ jsxs("span", { className: "font-mono-ui text-xs text-muted-foreground", children: [
-          "0",
-          projects.length,
-          " projects"
-        ] })
-      ] }),
-      /* @__PURE__ */ jsx("ul", { className: "divide-y divide-border", children: projects.map((p, i) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsxs("a", { href: p.link, target: "_blank", rel: "noreferrer", className: "group grid grid-cols-12 gap-6 py-8 transition", children: [
-        /* @__PURE__ */ jsxs("span", { className: "col-span-12 font-mono-ui text-xs text-muted-foreground sm:col-span-1", children: [
-          "0",
-          i + 1
-        ] }),
-        /* @__PURE__ */ jsxs("div", { className: "col-span-12 sm:col-span-7", children: [
-          /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-medium tracking-tight transition group-hover:text-accent sm:text-3xl", children: [
-            p.name,
-            /* @__PURE__ */ jsx("span", { className: "ml-2 inline-block opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100", children: "↗" })
-          ] }),
-          /* @__PURE__ */ jsx("p", { className: "mt-2 text-muted-foreground", children: p.blurb })
-        ] }),
-        /* @__PURE__ */ jsx("div", { className: "col-span-12 flex flex-wrap items-start gap-2 sm:col-span-4 sm:justify-end", children: p.stack.map((s) => /* @__PURE__ */ jsx("span", { className: "rounded-full border border-border px-2.5 py-1 font-mono-ui text-[11px] text-muted-foreground", children: s }, s)) })
-      ] }) }, p.name)) })
     ] }),
     /* @__PURE__ */ jsx("section", { id: "experience", className: "border-t border-border/60 bg-secondary/30", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-5xl px-6 py-24", children: [
       /* @__PURE__ */ jsxs("h2", { className: "mb-12 text-3xl font-medium tracking-tight sm:text-4xl", children: [
@@ -435,6 +545,51 @@ function Index() {
         ] })
       ] })
     ] }) }),
+    /* @__PURE__ */ jsxs("section", { id: "work", className: "mx-auto max-w-5xl px-6 py-24", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-12 flex items-baseline justify-between", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "text-3xl font-medium tracking-tight sm:text-4xl", children: [
+          "Project ",
+          /* @__PURE__ */ jsx("span", { className: "font-display italic", children: "work" })
+        ] }),
+        /* @__PURE__ */ jsxs("span", { className: "font-mono-ui text-xs text-muted-foreground", children: [
+          "0",
+          projects.length,
+          " projects"
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("ul", { className: "divide-y divide-border", children: projects.map((p, i) => /* @__PURE__ */ jsx("li", { children: /* @__PURE__ */ jsxs("a", { href: p.link, target: "_blank", rel: "noreferrer", className: "group grid grid-cols-12 gap-6 py-8 transition", children: [
+        /* @__PURE__ */ jsxs("span", { className: "col-span-12 font-mono-ui text-xs text-muted-foreground sm:col-span-1", children: [
+          "0",
+          i + 1
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "col-span-12 sm:col-span-7", children: [
+          /* @__PURE__ */ jsxs("h3", { className: "text-2xl font-medium tracking-tight transition group-hover:text-accent sm:text-3xl", children: [
+            p.name,
+            /* @__PURE__ */ jsx("span", { className: "ml-2 inline-block opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100", children: "↗" })
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "mt-2 text-muted-foreground", children: p.blurb })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "col-span-12 flex flex-wrap items-start gap-2 sm:col-span-4 sm:justify-end", children: p.stack.map((s) => /* @__PURE__ */ jsx("span", { className: "rounded-full border border-border px-2.5 py-1 font-mono-ui text-[11px] text-muted-foreground", children: s }, s)) })
+      ] }) }, p.name)) })
+    ] }),
+    /* @__PURE__ */ jsx("section", { id: "stack", className: "border-y border-border/60 bg-secondary/20", children: /* @__PURE__ */ jsxs("div", { className: "mx-auto max-w-5xl px-6 py-20", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8 flex items-baseline justify-between", children: [
+        /* @__PURE__ */ jsxs("h2", { className: "text-3xl font-medium tracking-tight sm:text-4xl", children: [
+          "The ",
+          /* @__PURE__ */ jsx("span", { className: "font-display italic", children: "stack" })
+        ] }),
+        /* @__PURE__ */ jsxs("span", { className: "font-mono-ui text-xs text-muted-foreground", children: [
+          "floating · ",
+          Object.values(skills).flat().length,
+          " skills"
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx(SkillsBubbles, {})
+    ] }) }),
+    /* @__PURE__ */ jsx("section", { id: "stack", className: "border-y border-border/60 bg-secondary/40 py-6", children: /* @__PURE__ */ jsx("div", { className: "overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "marquee-track flex w-max gap-10 whitespace-nowrap font-mono-ui text-sm text-muted-foreground", children: [...flatSkills, ...flatSkills].map((s, i) => /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-10", children: [
+      s,
+      /* @__PURE__ */ jsx("span", { className: "text-accent", children: "/" })
+    ] }, i)) }) }) }),
     /* @__PURE__ */ jsxs("section", { id: "contact", className: "mx-auto max-w-5xl px-6 py-28", children: [
       /* @__PURE__ */ jsxs("h2", { className: "text-4xl font-medium tracking-tight sm:text-6xl", children: [
         "Let's build ",
@@ -463,7 +618,7 @@ function Index() {
         (/* @__PURE__ */ new Date()).getFullYear(),
         " ",
         profile.name,
-        ". Crafted with too much ☕."
+        "."
       ] }),
       /* @__PURE__ */ jsx("button", { onClick: () => setTermOpen(true), className: "hover:text-foreground", children: "press ⌘K for terminal →" })
     ] }) }),

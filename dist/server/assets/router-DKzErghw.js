@@ -1,7 +1,7 @@
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { createRootRouteWithContext, useRouter, Link, Outlet, HeadContent, Scripts, createFileRoute, lazyRouteComponent, createRouter } from "@tanstack/react-router";
 import { jsx, jsxs } from "react/jsx-runtime";
-const appCss = "/assets/styles-Bm4Sn3Be.css";
+const appCss = "/assets/styles-BK7kYHfC.css";
 function NotFoundComponent() {
   return /* @__PURE__ */ jsx("div", { className: "flex min-h-screen items-center justify-center bg-background px-4", children: /* @__PURE__ */ jsxs("div", { className: "max-w-md text-center", children: [
     /* @__PURE__ */ jsx("h1", { className: "text-7xl font-bold text-foreground", children: "404" }),
@@ -55,21 +55,21 @@ const Route$1 = createRootRouteWithContext()(
         { title: "Nancy Kataria" },
         {
           name: "description",
-          content: "Echo Chamber is a modern portfolio website designed to showcase your skills, projects, and experience to recruiters."
+          content: "Modern portfolio website designed to showcase your skills, projects, and experience to recruiters."
         },
-        { name: "author", content: "Lovable" },
+        { name: "author", content: "Nancy Kataria" },
         { property: "og:title", content: "Nancy Kataria" },
         {
           property: "og:description",
-          content: "Echo Chamber is a modern portfolio website designed to showcase your skills, projects, and experience to recruiters."
+          content: "Modern portfolio website designed to showcase your skills, projects, and experience to recruiters."
         },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary" },
-        { name: "twitter:site", content: "@Lovable" },
+        { name: "twitter:site", content: "Nancy Kataria" },
         { name: "twitter:title", content: "Nancy Kataria" },
         {
           name: "twitter:description",
-          content: "Echo Chamber is a modern portfolio website designed to showcase your skills, projects, and experience to recruiters."
+          content: "Modern portfolio website designed to showcase your skills, projects, and experience to recruiters."
         },
         {
           property: "og:image",
@@ -106,7 +106,7 @@ function RootComponent() {
   const { queryClient } = Route$1.useRouteContext();
   return /* @__PURE__ */ jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsx(Outlet, {}) });
 }
-const $$splitComponentImporter = () => import("./index-BssL_hsn.js");
+const $$splitComponentImporter = () => import("./index-7IHh6EQf.js");
 const Route = createFileRoute("/")({
   head: () => ({
     meta: [{
