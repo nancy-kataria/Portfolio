@@ -1,7 +1,4 @@
 {
   "buildCommand": "bun run build",
-  "outputDirectory": "dist/server",
-  "serverless": {
-    "external": ["node_modules/*"]
-  }
+  "outputDirectory": "dist/server"
 }
