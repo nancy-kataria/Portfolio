@@ -136,13 +136,6 @@ export const skills = {
     "Postman",
     "Vitest",
   ],
-  "Core Competencies": [
-    "Data Structures",
-    "Algorithms",
-    "Problem Solving",
-    "Critical Thinking",
-    "Cross-Functional Communication",
-  ],
 };
 
 export const flatSkills = Object.values(skills).flat();
