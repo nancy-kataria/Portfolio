@@ -262,7 +262,7 @@ function Index() {
               The <span className="font-display italic">stack</span>
             </h2>
             <span className="font-mono-ui text-xs text-muted-foreground">
-              floating · {Object.values(skills).flat().length} skills
+              {Object.values(skills).flat().length} skills
             </span>
           </div>
           <SkillsBubbles />

@@ -27,8 +27,13 @@ const ICON_SLUGS: Record<string, string | null> = {
   Prisma: "prisma",
   Git: "git",
   GitHub: "github",
+  "Github Actions": "githubactions",
+  DevOps: null,
   Postman: "postman",
   Zod: "zod",
+  "Tailwind CSS": "tailwindcss",
+  PostgreSQL: "postgresql",
+  Vitest: "vitest",
 };
 
 type Bubble = {
@@ -46,6 +51,7 @@ export function SkillsBubbles() {
   const bubblesRef = useRef<Bubble[]>([]);
   const nodesRef = useRef<(HTMLDivElement | null)[]>([]);
   const [, force] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const allSkills = useMemo(() => {
     const list: { name: string; slug: string | null }[] = [];
@@ -147,8 +153,14 @@ export function SkillsBubbles() {
               willChange: "transform",
             }}
             title={b.name}
+            onMouseEnter={() => setHoveredIndex(i)}
+            onMouseLeave={() => setHoveredIndex(null)}
           >
-            {hasLogo ? (
+            {hoveredIndex === i ? (
+              <span className="px-2 text-center font-mono-ui text-xs text-foreground">
+                {b.name}
+              </span>
+            ) : hasLogo ? (
               <img
                 src={`https://cdn.simpleicons.org/${b.slug}`}
                 alt={b.name}

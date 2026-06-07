@@ -7,14 +7,38 @@ export const profile = {
   github: "https://github.com/nancy-kataria",
   linkedin: "https://www.linkedin.com/in/nancy-kataria8/",
   resume:
-    "https://drive.google.com/file/d/11MPzRBfGpUfEI8Q7g42kmKV-i25AhhQe/view?usp=sharing",
+    "https://drive.google.com/file/d/1HXInpFfkguZbp2FPL3tg23fdMfAu6p78/view?usp=sharing",
 };
 
 export const projects = [
   {
+    name: "Bull v. Bear",
+    blurb: "AI-powered Investment research platform",
+    stack: [
+      "Typescript",
+      "Next.js",
+      "PostgreSQL",
+      "Supabase",
+      "Prisma",
+      "AI-SDK",
+      "OpenAI",
+      "Vitest",
+      "OAuth",
+    ],
+    link: "https://github.com/nancy-kataria/Bull-v-Bear",
+  },
+  {
     name: "Code Intelligence",
     blurb: "RAG app that answers questions about any GitHub repo.",
-    stack: ["Next.js", "TypeScript", "Langchain", "Pinecone", "GPT-4"],
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Langchain",
+      "Pinecone",
+      "Zod",
+      "OpenAI GPT-4",
+      "Vercel",
+    ],
     link: "https://github.com/nancy-kataria/codebase-intelligence",
   },
   {
@@ -71,7 +95,15 @@ export const education = [
 ];
 
 export const skills = {
-  Languages: ["Python", "JavaScript", "TypeScript", "SQL", "HTML", "CSS"],
+  Languages: [
+    "Python",
+    "JavaScript",
+    "TypeScript",
+    "SQL",
+    "HTML",
+    "CSS",
+    "DevOps",
+  ],
   Frameworks: ["React", "Next.js", "Node.js", "Express.js", "Deno"],
   "AI / Data": [
     "Langchain",
@@ -81,9 +113,11 @@ export const skills = {
     "NumPy",
     "Scikit-learn",
     "Prolog",
+    "Tailwind CSS",
+    "Vitest",
   ],
-  Databases: ["MongoDB", "MySQL", "Supabase", "Prisma"],
-  Tools: ["Git", "GitHub", "Postman", "Zod"],
+  Databases: ["MongoDB", "MySQL", "Supabase", "Prisma", "PostgreSQL"],
+  Tools: ["Git", "GitHub", "Postman", "Zod", "Github Actions"],
 };
 
 export const flatSkills = Object.values(skills).flat();
