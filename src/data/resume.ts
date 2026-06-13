@@ -7,7 +7,7 @@ export const profile = {
   github: "https://github.com/nancy-kataria",
   linkedin: "https://www.linkedin.com/in/nancy-kataria8/",
   resume:
-    "https://drive.google.com/file/d/1HXInpFfkguZbp2FPL3tg23fdMfAu6p78/view?usp=sharing",
+    "https://drive.google.com/file/d/19CE2xHMvxnkJ7DOvu6kBxK8Ed_B6pXVc/view",
 };
 
 export const projects = [
@@ -59,22 +59,14 @@ export const experience = [
   {
     company: "i3 Digital Health",
     role: "Software Engineer",
-    period: "Jul 2023 — Nov 2023",
+    period: "Jan 2023 — Nov 2023",
     location: "Bangalore, India",
     points: [
-      "Built a doctor-facing portal with React + Redux for cancer genomics and treatments.",
-      "Designed JWT auth and RESTful APIs in Express.js.",
-      "Used React Query for cached, real-time patient ↔ doctor communication.",
-    ],
-  },
-  {
-    company: "i3 Digital Health",
-    role: "Software Engineer Intern",
-    period: "Jan 2023 — Jun 2023",
-    location: "Bangalore, India",
-    points: [
-      "Shipped a Time Log & Payroll system with React, Express and MongoDB.",
-      "Built v1 of the Cancer Patient Health Records app from scratch.",
+      "Developed a doctor-faced portal in React, reducing report-analysis friction between multiple oncologists and served 100+ users.",
+      "Secured Patient Data with JWT-based authentication and role-based access control across platform.",
+      "Reduced redundant data fetches by 40% by client side caching with React Query, ensuring near-instant page reloads.",
+      "Automated deployment workflows via CI/CD pipelines to an Amazon EC2 instance, cutting deployment downtime and implementing test coverage.",
+      "Streamlined workplace task management by building a full-stack Payroll and Time Log System, utilizing MongoDB and Express.js for secure backend data management and React for UI.",
     ],
   },
 ];
