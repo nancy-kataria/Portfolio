@@ -47,12 +47,6 @@ export const projects = [
     stack: ["Next.js", "Ollama", "Gemma3", "Llava", "Web Speech API"],
     link: "https://github.com/nancy-kataria/Digital_Lawyer",
   },
-  {
-    name: "Parking Violations Checker",
-    blurb: "Prolog expert system that infers campus parking violations.",
-    stack: ["Prolog", "JavaScript", "HTML", "CSS"],
-    link: "https://github.com/nancy-kataria/Parking-Violations-Checker",
-  },
 ];
 
 export const experience = [
