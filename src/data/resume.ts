@@ -99,10 +99,6 @@ export const skills = {
     "Deno",
     "Tailwind CSS",
     "Zod",
-    "Pandas",
-    "NumPy",
-    "Scikit-learn",
-    "PyTorch",
     "LangChain",
   ],
   "Databases & Backends": [
