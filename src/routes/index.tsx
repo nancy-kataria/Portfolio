@@ -10,6 +10,7 @@ import {
 } from "@/data/resume";
 import { Terminal } from "@/components/Terminal";
 import { SkillsBubbles } from "@/components/SkillsBubbles";
+import workspaceAsset from "@/assets/nancy.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -148,6 +149,53 @@ function Index() {
             >
               $ open terminal
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* About / workspace band */}
+      <section id="about" className="mx-auto max-w-5xl px-6 py-20">
+        <div className="grid gap-10 md:grid-cols-12 md:items-center">
+          <div className="md:col-span-5">
+            <h2 className="text-3xl font-medium tracking-tight sm:text-4xl">
+              Who <span className="font-display italic">am I ?</span>
+            </h2>
+            <p className="mt-5 max-w-md text-muted-foreground">
+              My sweet spot is full-stack development — from React interfaces
+              and APIs to databases, cloud infrastructure, and increasingly,
+              AI-powered applications. I like solving problems, learning new
+              technologies, and turning “wouldn’t it be cool if…” into something
+              people can actually use.
+            </p>
+            <p className="mt-4 max-w-md text-muted-foreground">
+              Fun fact: some of my best debugging sessions have started with
+              “this should only take five minutes.”
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <span className="rounded-full border border-border px-3 py-1 font-mono-ui text-[11px] text-muted-foreground">
+                Coffee
+              </span>
+              <span className="rounded-full border border-border px-3 py-1 font-mono-ui text-[11px] text-muted-foreground">
+                Code
+              </span>
+              <span className="rounded-full border border-border px-3 py-1 font-mono-ui text-[11px] text-muted-foreground">
+                Curiosity
+              </span>
+              <span className="rounded-full border border-border px-3 py-1 font-mono-ui text-[11px] text-muted-foreground">
+                Chaos
+              </span>
+            </div>
+          </div>
+          <div className="md:col-span-7">
+            <div className="group relative overflow-hidden rounded-2xl border border-border bg-secondary/40 shadow-sm">
+              <img
+                src={workspaceAsset}
+                alt="A stylized 3D workspace with floating UI widgets"
+                className="aspect-video w-full object-cover transition duration-700 group-hover:scale-[1.02]"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-foreground/5" />
+            </div>
           </div>
         </div>
       </section>
