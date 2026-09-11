@@ -42,10 +42,18 @@ export const projects = [
     link: "https://github.com/nancy-kataria/codebase-intelligence",
   },
   {
-    name: "Digital Lawyer",
-    blurb: "Offline-first AI legal assistant running fully on-device.",
-    stack: ["Next.js", "Ollama", "Gemma3", "Llava", "Web Speech API"],
-    link: "https://github.com/nancy-kataria/Digital_Lawyer",
+    name: "Tixly",
+    blurb:
+      "Event Ticketing app, inspired by Ticketmaster to sell/buy/transfer tickets.",
+    stack: [
+      "JavaScript",
+      "React",
+      "PostgreSQL",
+      "Supabase",
+      "Google OAuth",
+      "Stripe",
+    ],
+    link: "https://github.com/nancy-kataria/Tixly",
   },
 ];
 
