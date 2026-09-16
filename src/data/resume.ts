@@ -7,7 +7,7 @@ export const profile = {
   github: "https://github.com/nancy-kataria",
   linkedin: "https://www.linkedin.com/in/nancy-kataria8/",
   resume:
-    "https://drive.google.com/file/d/1-cmet3JzWsy3PKO38A-NeFWVPrGJwl3l/view?usp=sharing",
+    "https://drive.google.com/file/d/17gZqU3rhaWGlGPCl1QtZ7hI7I0P_COmB/view?usp=sharing",
 };
 
 export const projects = [
